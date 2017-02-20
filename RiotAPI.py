@@ -9,10 +9,11 @@ from api import API_KEY as key
 
 API_key = key.getAPI_KEY()
 Region = "na"
+platformID = "na1"
 Host = "na.api.pvp.net"
 
 
-def findChampionID(Key, Region):
+def findChampionID(Key, Region='na'):
     """
     Function to retrieve Champion ID# based on champion key, usually name(i.e. jax gives 24)
     only exception I know of at the moment is 'Monkey King' for wukong
@@ -24,7 +25,7 @@ def findChampionID(Key, Region):
     json_obj = r.json()
     return json_obj['data'][Key]['id']
 
-def getChampionData(ChampionID, Region):
+def getChampionData(ChampionID, Region='na'):
     """
     Function to retrieve Champion data based on champion ID. Returns stats in form of JSON file. Print it to console
     to explore more.
@@ -36,7 +37,7 @@ def getChampionData(ChampionID, Region):
     json_obj = r.json()
     return json_obj
 
-def getSummonerID(summonerNames, Region):
+def getSummonerID(summonerNames, Region='na'):
     """
     Function to retrieve Summoner IDs from a list of summoner names.
     Returns a list of summoner id's in the same order of names given
@@ -55,7 +56,7 @@ def getSummonerID(summonerNames, Region):
         id_list.append(json_obj[summonerNames[i].lower()]['id'])
     return id_list
 
-def getSummonerNames(summonerIDs, Region):
+def getSummonerNames(summonerIDs, Region='na'):
     """
     Function to retrieve summoner names from a list of Summoner IDs.
     Returns a list of summoner names's in the same order of ID's given
@@ -74,7 +75,7 @@ def getSummonerNames(summonerIDs, Region):
     return name_list
 
 
-def getRecentGames(summonerID, Region):
+def getRecentGames(summonerID, Region='na'):
     """
     Function to retrieve Recent games from a Summoner ID.
     Returns a JSON of recent games. Print to learn more.
@@ -87,7 +88,7 @@ def getRecentGames(summonerID, Region):
     json_obj = r.json()
     return json_obj
 
-def getRankedStats(summonerID, Region):
+def getRankedStats(summonerID, Region='na'):
     """
     Function to retrieve ranked stats from a Summoner ID.
     Returns a JSON of stats. Print to learn more.
@@ -100,7 +101,7 @@ def getRankedStats(summonerID, Region):
     json_obj = r.json()
     return json_obj
 
-def getMasteries(summonerIDs, Region):
+def getMasteries(summonerIDs, Region='na'):
     """
     Function to retrieve materies from a Summoner ID.
     Returns a JSON of masteries. Print to learn more.
@@ -119,7 +120,7 @@ def getMasteries(summonerIDs, Region):
         mast_list.append(json_obj[str(summonerIDs[i])])
     return mast_list
 
-def getRunes(summonerIDs, Region):
+def getRunes(summonerIDs, Region='na'):
     """
     Function to retrieve runes from a Summoner ID.
     Returns a JSON of runes. Print to learn more.
@@ -138,7 +139,7 @@ def getRunes(summonerIDs, Region):
         rune_list.append(json_obj[str(summonerIDs[i])])
     return rune_list
 
-def getRuneData(ID, Region):
+def getRuneData(ID, Region='na'):
     """
     Function to retrieve rune data based on champion ID. Returns stats in form of JSON file. Print it to console
     to explore more.
@@ -151,9 +152,9 @@ def getRuneData(ID, Region):
     json_obj = r.json()
     return json_obj
 
-def getMasteryData(ID, Region):
+def getMasteryData(ID, Region='na'):
     """
-    Function to retrieve rune data based on champion ID. Returns stats in form of JSON file. Print it to console
+    Function to retrieve rune data based on rune ID. Returns stats in form of JSON file. Print it to console
     to explore more.
     To get name of mastery getMasteryData(ID,Region)['name']
     input: ID integer, Region string
@@ -161,6 +162,46 @@ def getMasteryData(ID, Region):
     """
     url = "https://" + Host + "/api/lol/static-data/" + Region + "/v1.2/mastery/" + str(
         ID) + "?api_key=" + API_key
+    r = requests.get(url)
+    json_obj = r.json()
+    return json_obj
+
+def getItemData(ID, Region='na'):
+    """
+    Function to retrieve item data based on item ID. Returns stats in form of JSON file. Print it to console
+    to explore more.
+    To get name of item getItemData(ID,Region)['name']
+    input: ID integer, Region string
+    Output: Data JSON
+    """
+    url = "https://" + Host + "/api/lol/static-data/" + Region + "/v1.2/item/" + str(
+        ID) + "?api_key=" + API_key
+    r = requests.get(url)
+    json_obj = r.json()
+    return json_obj
+
+def getItemList(Region='na'):
+    """
+    Function to retrieve item data based on item ID. Returns stats in form of JSON file. Print it to console
+    to explore more.
+    To get name of item getItemData(ID,Region)['name']
+    input: ID integer, Region string
+    Output: Data JSON
+    """
+    url = "https://" + Host + "/api/lol/static-data/" + Region + "/v1.2/item/?api_key=" + API_key
+    r = requests.get(url)
+    json_obj = r.json()
+    return json_obj
+
+def getCurrentGameData(summonerID, platformID='na1'):
+    """
+    Function to retrieve current game data based on summoner ID. Returns stats in form of JSON file. Print it to console
+    to explore more.
+    input: summonerID integer, platformID string
+    Output: Data JSON
+    """
+    url = "https://" + Host + "/observer-mode/rest/consumer/getSpectatorGameInfo/" + platformID + \
+          "/" + str(summonerID) + "?api_key=" + API_key
     r = requests.get(url)
     json_obj = r.json()
     return json_obj
@@ -183,7 +224,10 @@ if __name__ == "__main__":
     # print getRankedStats(68191523,Region)['champions'][0]
     # print getRankedStats(68191523,Region)['champions'][0]['id']
     # print getChampionData(getRankedStats(68191523,Region)['champions'][0]['id'], Region)
-    print getMasteries([68191523],Region)
+    # print getMasteries([68191523],Region)
     # print getRunes([68191523],Region)
     assert(getRuneData(5245, Region)['name'] == 'Greater Mark of Attack Damage')
     assert(getMasteryData(6121, Region)['name'] == 'Fresh Blood')
+    # print(getItemList(Region))
+    assert(getItemData(1400,Region)['name'] == 'Enchantment: Warrior')
+    print(getCurrentGameData(68191523))
