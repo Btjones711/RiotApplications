@@ -213,13 +213,7 @@ if __name__ == "__main__":
     assert(getSummonerID(["BruttonGuster"],Region) == [68191523])
     my_id = getSummonerID(["BruttonGuster"],Region)
     x = getRecentGames(my_id[0], Region)['games']
-    # ip_sum = 0
-    # number = 0
-    # for i in range(len(x)):
-    #     print(x[i]['ipEarned'])
-    #     ip_sum += x[i]['ipEarned']
-    #     number += 1
-    # print(ip_sum/number)
+
     assert(getSummonerNames([68191523],Region)[0] == "BruttonGuster")
     # print getRankedStats(68191523,Region)['champions'][0]
     # print getRankedStats(68191523,Region)['champions'][0]['id']
@@ -230,4 +224,6 @@ if __name__ == "__main__":
     assert(getMasteryData(6121, Region)['name'] == 'Fresh Blood')
     # print(getItemList(Region))
     assert(getItemData(1400,Region)['name'] == 'Enchantment: Warrior')
-    print(getCurrentGameData(68191523))
+    #print(getCurrentGameData(68191523))
+    # TODO Find a way to test current game data. May just have to test while in game.
+    # could test against twitch streamers on their daily schedule
