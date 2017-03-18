@@ -10,11 +10,11 @@ def getAPI_KEY():
     
 And it should work with my intial API retrieval library RiotAPI.py.
 
-#So Far
+# So Far
 At the moment I am currently building up the tools to be able to start creating amazing applications. If there are any API retrievals that I have not added and you think they should be there add them. If you think you can create something with what we have start it.
 Make sure that everyone knows what you are working on so we can help and so there is no overlap of ideas.
 
-#Ideas
+# Ideas
 If you have any ideas add them to an issue so we can work together and discuss it.
 
-#That is all for now
+# That is all for now
